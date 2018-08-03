@@ -209,8 +209,8 @@ public class Moves {
             int Move;
             AStar ast = new AStar();
             Point MoveTo = new Point();
-            AStar.A_star(SnakeHead, Appl2, ClosedList);
             ArrayList<Point> movelist = new ArrayList<Point>(ast.main(SnakeHead, Appl2, ClosedList));
+            AStar.A_star(SnakeHead, Appl2, ClosedList);
             if (movelist.size() > 1) {
                 MoveTo = new Point(movelist.get(1));
                 //System.out.println("A*");
