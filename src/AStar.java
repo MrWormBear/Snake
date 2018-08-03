@@ -96,7 +96,7 @@ public class AStar {
                 Point Neighbour = new Point(Current);
                 // Neighbour=(Current);
                 Neighbour.y = Neighbour.y - 1;
-                if (Neighbour.y >=0) {
+                if (Neighbour.y > 0) {
                     if (Closedset.contains(Neighbour)) {
 
                     } else {
@@ -118,7 +118,7 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour.equals(Current);
                 Neighbour.x = Neighbour.x + 1;
-                if (Neighbour.x < 50) {
+                if (Neighbour.x < 49) {
                     if (Closedset.contains(Neighbour)) {
 
                     } else {
@@ -138,7 +138,7 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour.equals(Current);
                 Neighbour.y = Neighbour.y + 1;
-                if (Neighbour.y < 50) {
+                if (Neighbour.y < 49) {
                     if (Closedset.contains(Neighbour)) {
 
                     } else {
@@ -161,7 +161,7 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour=Current;
                 Neighbour.x = Neighbour.x - 1;
-                if (Neighbour.x >=0) {
+                if (Neighbour.x >0) {
                     if (Closedset.contains(Neighbour)) {
 
                     } else {
