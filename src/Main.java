@@ -53,6 +53,9 @@ public class Main extends DevelopmentAgent {
 
             while (true) {
                 ClosedList.clear();
+                mySnakepoints.clear();
+                OtherSnakes.clear();
+
                 String line = br.readLine();
                 if (line.contains("Game Over")) {
                     break;
@@ -120,6 +123,7 @@ public class Main extends DevelopmentAgent {
                             String[] Temppointholder = new String[2];
                             Arrays.fill(Temppointholder,null);
                             Temppointholder=Snekarr[K].split(",");
+
 
                                 temppoint.x = Integer.parseInt(Temppointholder[0]);
                                 temppoint.y = Integer.parseInt(Temppointholder[1]);

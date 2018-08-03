@@ -142,6 +142,120 @@ public class Moves {
 
     }
 
+    public void toOpApple(){
+        int move = 0;
+        boolean hasmove = true;
+        Point OpApple=new Point();
+        OpApple.x=Appl2.y;
+        OpApple.y=Appl2.x;
+        while (hasmove == true) {
+
+            if (Math.abs(SnakeHead.x - OpApple.x) > Math.abs(SnakeHead.y - OpApple.y)) {
+
+                if (SnakeHead.x > OpApple.x && (hasmove == true)) {
+                    if (moveDirec == "UP") {
+                        move = 2;
+
+                    }
+                    if (moveDirec == "DOWN") {
+                        move = 2;
+
+                    }
+                    if (moveDirec == "LEFT") {
+                        move = 2;
+
+                    }
+                    if (moveDirec == "RIGHT") {
+                        move = 0;
+
+                    }
+                    hasmove = false;
+                    //break;
+
+                }
+
+                if (SnakeHead.x < OpApple.x && (hasmove == true)) {
+                    if (moveDirec == "UP") {
+                        move = 3;
+
+                    }
+                    if (moveDirec == "DOWN") {
+                        move = 3;
+
+                    }
+                    if (moveDirec == "LEFT") {
+                        move = 0;
+
+                    }
+                    if (moveDirec == "RIGHT") {
+                        move = 3;
+
+                    }
+                    hasmove = false;
+                    // break;
+
+                }
+            } else {
+
+                if (SnakeHead.y > OpApple.y && (hasmove == true)) {
+                    if (moveDirec == "UP") {
+                        move = 0;
+
+                    }
+
+                    if (moveDirec == "DOWN") {
+                        move = 3;
+
+                    }
+
+                    if (moveDirec == "LEFT") {
+                        move = 0;
+
+                    }
+
+                    if (moveDirec == "RIGHT") {
+                        move = 0;
+
+                    }
+                    hasmove = false;
+
+
+                }
+
+                if (SnakeHead.y < OpApple.y && (hasmove == true)) {
+                    if (moveDirec == "UP") {
+                        move = 3;
+
+                    }
+
+                    if (moveDirec == "DOWN") {
+                        move = 1;
+
+                    }
+
+                    if (moveDirec == "LEFT") {
+                        move = 1;
+
+                    }
+
+                    if (moveDirec == "RIGHT") {
+                        move = 1;
+
+                    }
+                    hasmove = false;
+
+
+                }
+
+            }
+
+        }
+
+        this.Move = move;
+
+    }
+
+
 
     public int getMove() {
 
@@ -210,7 +324,7 @@ public class Moves {
             AStar ast = new AStar();
             Point MoveTo = new Point();
             ArrayList<Point> movelist = new ArrayList<Point>(ast.main(SnakeHead, Appl2, ClosedList));
-            AStar.A_star(SnakeHead, Appl2, ClosedList);
+            AStar.A_star(SnakeHead, Appl2);
             if (movelist.size() > 1) {
                 MoveTo = new Point(movelist.get(1));
                 //System.out.println("A*");
@@ -229,7 +343,7 @@ public class Moves {
 
             } else {
 
-                ToApple();
+                 toOpApple();
 
             }
 

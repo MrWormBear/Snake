@@ -9,22 +9,28 @@ public class AStar {
    // public List<Point> OpenList;
    Point start;
    Point goal;
+
     public List<Point> main(Point Start, Point Goal, ArrayList<Point> ClosedList){
          ArrayList<Point> closedlist=new ArrayList<>();
-         closedlist.clear();
-         closedlist=ClosedList;
+
+        ArrayList<Point> Closedset = new ArrayList<>();
+        Closedset.clear();
+        Closedset=ClosedList;
+
          this.start =Start;
         this.goal = Goal;
 
-        List<Point> Output=A_star(Start,Goal,closedlist);
+        List<Point> Output=A_star(Start,Goal);
         return Output;
 
     }
 
-    public  static List<Point> A_star(Point Start, Point goal,ArrayList<Point> CLosedList ){
+    public  static List<Point> A_star(Point Start, Point goal ){
 
-            ArrayList<Point> Closedset = new ArrayList<>(CLosedList);
-            ArrayList<Point> Openset = new ArrayList<>();
+        ArrayList<Point> Closedset = new ArrayList<>();
+
+
+        ArrayList<Point> Openset = new ArrayList<>();
             Point Current = new Point();
             Openset.add(Start);
             Point[][] CameFrom = new Point[50][50];
