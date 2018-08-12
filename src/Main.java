@@ -52,7 +52,7 @@ public class Main extends DevelopmentAgent {
 
 
             while (true) {
-                ClosedList.clear();
+                //ClosedList.clear();
                 mySnakepoints.clear();
                 OtherSnakes.clear();
 
@@ -185,17 +185,20 @@ public class Main extends DevelopmentAgent {
 
                 }
 
+                    Timer time=new Timer();
+                     time.start();
 
-                    Moves moves = new Moves(SnakeHead, Appl2, moveDirec, ClosedList);
+                Moves moves = new Moves(SnakeHead, Appl2, moveDirec, ClosedList);
                     moves.main(SnakeHead, Appl2, moveDirec, ClosedList);
                     moves.CalcMoveAStar();
                     move = moves.getMove();
 
+                    time.stop();
+                    
 
 
 
-
-            System.out.println("log calculating..."+Integer.toString(move));
+            System.out.println("log calculating..."+Integer.toString(move)+"    "+Long.toString(time.getTime()));
             //int move = new Random().nextInt(4);
 
             System.out.println(move);

@@ -46,7 +46,7 @@ public class AStar {
                 }
             }
             GScore[Start.x][Start.y] = 0;
-            FScore[Start.x][Start.y] = (100000);
+            FScore[Start.x][Start.y] = (10000);
 
 
             while (!Openset.isEmpty()) {
@@ -96,9 +96,9 @@ public class AStar {
                 Point Neighbour = new Point(Current);
                 // Neighbour=(Current);
                 Neighbour.y = Neighbour.y - 1;
-                if (Neighbour.y > 0) {
+                if (Neighbour.y > -1) {
                     if (Closedset.contains(Neighbour)) {
-
+                        //FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
@@ -118,9 +118,9 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour.equals(Current);
                 Neighbour.x = Neighbour.x + 1;
-                if (Neighbour.x < 49) {
+                if (Neighbour.x < 50) {
                     if (Closedset.contains(Neighbour)) {
-
+                        //FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
@@ -138,9 +138,10 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour.equals(Current);
                 Neighbour.y = Neighbour.y + 1;
-                if (Neighbour.y < 49) {
+                if (Neighbour.y < 50) {
                     if (Closedset.contains(Neighbour)) {
-
+                         // continue;
+                       // FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
@@ -161,9 +162,9 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour=Current;
                 Neighbour.x = Neighbour.x - 1;
-                if (Neighbour.x >0) {
+                if (Neighbour.x >-1) {
                     if (Closedset.contains(Neighbour)) {
-
+                       // FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
