@@ -114,23 +114,36 @@ public class Main extends DevelopmentAgent {
 
                        String[] Snekarr = snakeLine.split(" ");
                        ArrayList<Point> OtherSnakepoints =new ArrayList<Point>();
+                        int count2 = 0;
+                        if(Snekarr[0].contentEquals("invisible")) {
+                            for (int K = 4; K < Snekarr.length; K++) {
 
-
-                            int count2 = 0;
-                        for (int K = 3; K < Snekarr.length; K++) {
-
-                            Point temppoint = new Point();
-                            String[] Temppointholder = new String[2];
-                            Arrays.fill(Temppointholder,null);
-                            Temppointholder=Snekarr[K].split(",");
+                                Point temppoint = new Point();
+                                String[] Temppointholder = new String[2];
+                                Arrays.fill(Temppointholder, null);
+                                Temppointholder = Snekarr[K].split(",");
 
 
                                 temppoint.x = Integer.parseInt(Temppointholder[0]);
                                 temppoint.y = Integer.parseInt(Temppointholder[1]);
 
+                                OtherSnakepoints.add(temppoint);
+                            }
+                        }else{
+                        for (int K = 3; K < Snekarr.length; K++) {
+
+                            Point temppoint = new Point();
+                            String[] Temppointholder = new String[2];
+                            Arrays.fill(Temppointholder, null);
+                            Temppointholder = Snekarr[K].split(",");
+
+
+                            temppoint.x = Integer.parseInt(Temppointholder[0]);
+                            temppoint.y = Integer.parseInt(Temppointholder[1]);
+
                             OtherSnakepoints.add(temppoint);
 
-
+                        }
 
 
 
