@@ -1,4 +1,5 @@
 import za.ac.wits.snake.DevelopmentAgent;
+import za.ac.wits.snake.Snake;
 
 import javax.print.attribute.standard.MediaSize;
 import java.awt.*;
@@ -21,6 +22,11 @@ public class Main extends DevelopmentAgent {
     @Override
     public void run() {
 
+
+
+        ArrayList<AppleTrack> applelist = new ArrayList<AppleTrack>();
+        Point AppleBackup = new Point();
+
         /////////////////////////////////////////////////////////////////////arraylists
         ArrayList<Point> mySnakepoints = new ArrayList<Point>();
 
@@ -34,7 +40,7 @@ public class Main extends DevelopmentAgent {
         Point SnakeHead=new Point();
         Point Prevs = new Point();
         Point Appl1 = new Point();
-        Point Appl2 = new Point();
+       // Point Appl2 = new Point();
 
 
         ///////////////////////////////////////////////////////////////other Vars
@@ -49,9 +55,16 @@ public class Main extends DevelopmentAgent {
             String initString = br.readLine();
             String[] temp = initString.split(" ");
             int nSnakes = Integer.parseInt(temp[0]);
+            Point tempap = new Point();
+            tempap.x=0;
+            tempap.y=0;
+
+            AppleTrack ap = new AppleTrack(tempap);
 
 
             while (true) {
+
+
                 //ClosedList.clear();
                 mySnakepoints.clear();
                 OtherSnakes.clear();
@@ -65,19 +78,20 @@ public class Main extends DevelopmentAgent {
                 String[] TemppointholderA1 = apple1.split(" ");
                 int x1= Integer.parseInt(TemppointholderA1[0]);
                 int y1 = Integer.parseInt(TemppointholderA1[1]);
+
                 Point tmpA1=new Point();
                 tmpA1.x=x1;
                 tmpA1.y=y1;
                 Appl1=tmpA1;
 
-                String apple2 = br.readLine();
-                String[] TemppointholderA2 = apple2.split(" ");
-                int x2 = Integer.parseInt(TemppointholderA2[0]);
-                int y2 = Integer.parseInt(TemppointholderA2[1]);
-                Point tmpA2=new Point();
-                tmpA2.x=x2;
-                tmpA2.y=y2;
-                Appl2=tmpA2;
+
+                if(ap.getApplept()!=Appl1){
+                    ap = new AppleTrack(Appl1);
+                }
+                ap.appledec();
+
+
+
                 /////////////////////////////////////////////////////////////////
 
 
@@ -175,43 +189,45 @@ public class Main extends DevelopmentAgent {
                 //getting Orientation of my snake;
                 SnakeHead = mySnakepoints.get(0);
                 Prevs=mySnakepoints.get(1);
+                MoveDirec mv =new MoveDirec();
 
-                moveDirec="";
-                if(SnakeHead.y == Prevs.y && SnakeHead.x < Prevs.x){
+                moveDirec= mv.getDirec(SnakeHead,Prevs);
 
-                    moveDirec="LEFT";
 
-                }
-                if(SnakeHead.y == Prevs.y && SnakeHead.x > Prevs.x){
+                int Dist = AStar.HCost(SnakeHead,Appl1);
 
-                    moveDirec="RIGHT";
+                Timer time=new Timer();
 
-                }
-                if(SnakeHead.x == Prevs.x && SnakeHead.y < Prevs.y){
+                if(Dist < 30){
+                    time=new Timer();
+                    time.start();
 
-                    moveDirec="UP";
-
-                }
-                if(SnakeHead.x == Prevs.x && SnakeHead.y > Prevs.y){
-
-                    moveDirec="DOWN";
-
-                }
-
-                    Timer time=new Timer();
-                     time.start();
-
-                Moves moves = new Moves(SnakeHead, Appl2, moveDirec, ClosedList);
-                    moves.main(SnakeHead, Appl2, moveDirec, ClosedList);
+                    Moves moves = new Moves(SnakeHead, Appl1, moveDirec, ClosedList);
+                    moves.main(SnakeHead, Appl1, moveDirec, ClosedList);
                     moves.CalcMoveAStar();
                     move = moves.getMove();
 
                     time.stop();
+                }else{
+
+
+                    time.start();
+                    Point SnakeTail = mySnakepoints.get(mySnakepoints.size()-1);
+                    Moves moves = new Moves(SnakeHead, SnakeTail, moveDirec, ClosedList);
+                    moves.main(SnakeHead, SnakeTail, moveDirec, ClosedList);
+                    moves.CalcMoveAStar();
+                    move = moves.getMove();
+
+                    time.stop();
+                }
 
 
 
 
-            System.out.println("log calculating..."+Integer.toString(move)+"    "+Long.toString(time.getTime()));
+
+
+
+            System.out.println("log calculating..."+Integer.toString(move)+"    "+Long.toString(time.getTime())+"\t"+ap.getApplept());
             //int move = new Random().nextInt(4);
 
             System.out.println(move);
