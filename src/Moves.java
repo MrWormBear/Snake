@@ -1,10 +1,5 @@
-import za.ac.wits.snake.agent.SnakeAgent;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Moves {
 
@@ -320,11 +315,11 @@ public class Moves {
 
     public void CalcMoveAStar() {
 
-            int Move;
+
             AStar ast = new AStar();
             Point MoveTo = new Point();
             ArrayList<Point> movelist = new ArrayList<Point>(ast.main(SnakeHead, Appl2, ClosedList));
-            AStar.A_star(SnakeHead, Appl2);
+            ast.A_star(SnakeHead, Appl2);
             if (movelist.size() > 1) {
                 MoveTo = new Point(movelist.get(1));
                 //System.out.println("A*");
@@ -344,10 +339,32 @@ public class Moves {
             } else {
 
                 //ToApple();
+                //Move to corner
+                Point corner = new Point();
+                corner.x = 0;
+                corner.y = 49;
+                ArrayList<Point> mv = new ArrayList<Point>(ast.main(SnakeHead, corner, ClosedList));
+                ast.A_star(SnakeHead, corner);
+                if (mv.size() > 1) {
+                    MoveTo = new Point(mv.get(1));
+                    //System.out.println("A*");
+                    if (SnakeHead.y > MoveTo.y) {
+                        this.Move = 0;
+
+                    } else if (SnakeHead.y < MoveTo.y) {
+                        this.Move = 1;
+
+                    } else if (SnakeHead.x > MoveTo.x) {
+                        this.Move = 2;
+
+                    } else if (SnakeHead.x < MoveTo.x) {
+                        this.Move = 3;
+                    }
+
+
+                }
 
             }
-
-
             //return Move;
 
 

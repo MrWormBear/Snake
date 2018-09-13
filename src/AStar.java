@@ -1,21 +1,19 @@
-import javax.xml.soap.Node;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class AStar {
    // public List<Point> OpenList;
    Point start;
    Point goal;
+    ArrayList<Point> Closedlt = new ArrayList<>();
 
     public List<Point> main(Point Start, Point Goal, ArrayList<Point> ClosedList){
          ArrayList<Point> closedlist=new ArrayList<>();
 
-        ArrayList<Point> Closedset = new ArrayList<>();
-        Closedset.clear();
-        Closedset=ClosedList;
+        this.Closedlt = new ArrayList<>(ClosedList);
+        //Closedset=ClosedList;
 
          this.start =Start;
         this.goal = Goal;
@@ -25,10 +23,10 @@ public class AStar {
 
     }
 
-    public  static List<Point> A_star(Point Start, Point goal ){
+    public List<Point> A_star(Point Start, Point goal){
 
         ArrayList<Point> Closedset = new ArrayList<>();
-
+            Closedset=Closedlt;
 
         ArrayList<Point> Openset = new ArrayList<>();
             Point Current = new Point();
@@ -46,7 +44,7 @@ public class AStar {
                 }
             }
             GScore[Start.x][Start.y] = 0;
-            FScore[Start.x][Start.y] = (100000);
+            FScore[Start.x][Start.y] = (10000);
 
 
             while (!Openset.isEmpty()) {
@@ -96,9 +94,9 @@ public class AStar {
                 Point Neighbour = new Point(Current);
                 // Neighbour=(Current);
                 Neighbour.y = Neighbour.y - 1;
-                if (Neighbour.y > 0) {
+                if (Neighbour.y > -1) {
                     if (Closedset.contains(Neighbour)) {
-
+                        //FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
@@ -118,9 +116,9 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour.equals(Current);
                 Neighbour.x = Neighbour.x + 1;
-                if (Neighbour.x < 49) {
+                if (Neighbour.x < 50) {
                     if (Closedset.contains(Neighbour)) {
-
+                        //FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
@@ -138,9 +136,10 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour.equals(Current);
                 Neighbour.y = Neighbour.y + 1;
-                if (Neighbour.y < 49) {
+                if (Neighbour.y < 50) {
                     if (Closedset.contains(Neighbour)) {
-
+                         // continue;
+                       // FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
@@ -161,9 +160,9 @@ public class AStar {
                 Neighbour = new Point(Current);
                 //Neighbour=Current;
                 Neighbour.x = Neighbour.x - 1;
-                if (Neighbour.x >0) {
+                if (Neighbour.x >-1) {
                     if (Closedset.contains(Neighbour)) {
-
+                       // FScore[Neighbour.x][Neighbour.y]=100;
                     } else {
                         int tentative_G = GScore[Current.x][Current.y] + 1;
                         if (!Openset.contains(Neighbour)) {
