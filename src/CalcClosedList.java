@@ -38,26 +38,9 @@ public class CalcClosedList {
 
                Point Point1 = temp.get(ssize) ;
                Point Point2 = temp.get(ssize+1);
-               if (Point1.y == Point2.y && Point1.x < Point2.x) {
+               MoveDirec mv = new MoveDirec();
+               moveDirec = mv.getDirec(Point1,Point2);
 
-                   moveDirec = "LEFT";
-
-               }
-               if (Point1.y == Point2.y && Point1.x > Point2.x) {
-
-                   moveDirec = "RIGHT";
-
-               }
-               if (Point1.x == Point2.x && Point1.y < Point2.y) {
-
-                   moveDirec = "UP";
-
-               }
-               if (Point1.x == Point2.x && Point1.y > Point2.y) {
-
-                   moveDirec = "DOWN";
-
-               }
                switch(moveDirec){
 
 
