@@ -138,26 +138,26 @@ public class CalcClosedList {
                                    TempPoint = Snake.get(0);
 
 
-                                   Point Nextpt = new Point();
-                                   Nextpt = TempPoint;
+                                   Point Nextpt = new Point(TempPoint);
+                                  // Nextpt = TempPoint;
                                    Nextpt.x = Nextpt.x + 1;
                                    ClosedList.add(Nextpt);
-                                   Nextpt.x = Nextpt.x - 1;
+                                   //Nextpt.x = Nextpt.x - 1;
 
-
+                                   Nextpt = new Point(TempPoint);
                                    Nextpt.x = Nextpt.x - 1;
                                    ClosedList.add(Nextpt);
-                                   Nextpt.x = Nextpt.x + 1;
+                                  // Nextpt.x = Nextpt.x + 1;
 
-
+                                   Nextpt = new Point(TempPoint);
                                    Nextpt.y = Nextpt.y + 1;
                                    ClosedList.add(Nextpt);
-                                   Nextpt.y = Nextpt.y - 1;
+                                   //Nextpt.y = Nextpt.y - 1;
 
-
+                                   Nextpt = new Point(TempPoint);
                                    Nextpt.y = Nextpt.y - 1;
                                    ClosedList.add(Nextpt);
-                                   Nextpt.y = Nextpt.y + 1;
+                                   //Nextpt.y = Nextpt.y + 1;
                                }
                        }
                        break;
