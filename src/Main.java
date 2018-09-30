@@ -24,16 +24,18 @@ public class Main extends DevelopmentAgent {
 
 
 
-        ArrayList<AppleTrack> applelist = new ArrayList<AppleTrack>();
+
         Point AppleBackup = new Point();
 
         /////////////////////////////////////////////////////////////////////arraylists
         ArrayList<Point> mySnakepoints = new ArrayList<Point>();
 
         ArrayList<Point> ClosedList = new ArrayList<>();
-        ArrayList<Point> OtherHeads= new ArrayList<Point>();
-
+        ArrayList<String> Alive = new ArrayList<>();
+        ArrayList<Point> otherSHeads = new ArrayList<>();
         ArrayList<ArrayList> OtherSnakes = new ArrayList<>();
+
+        ArrayList<OS> Snakedets = new ArrayList<>();
 
 
         ////////////////////////////////////////////////////////////////points
@@ -47,10 +49,14 @@ public class Main extends DevelopmentAgent {
         int move=0;
         //Moves moves = new Moves();
         String moveDirec = null;
-        String Alive= "alive";
+        //String Alive= "alive";
+        int snake1dist= 0 ;
+        int snake2dist = 0 ;
+        int snake3dist = 0 ;
 
         ///////////////////////////////////////////////////////////////////////////////////////////Begin
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+
 
             String initString = br.readLine();
             String[] temp = initString.split(" ");
@@ -58,16 +64,18 @@ public class Main extends DevelopmentAgent {
             Point tempap = new Point();
             tempap.x=0;
             tempap.y=0;
+            int Dist;
 
-            AppleTrack ap = new AppleTrack(tempap);
 
 
             while (true) {
+                Timer time=new Timer();
+                time.start();
 
-
-                //ClosedList.clear();
                 mySnakepoints.clear();
                 OtherSnakes.clear();
+                ClosedList.clear();
+                Snakedets.clear();
 
                 String line = br.readLine();
                 if (line.contains("Game Over")) {
@@ -85,10 +93,7 @@ public class Main extends DevelopmentAgent {
                 Appl1=tmpA1;
 
 
-                if(ap.getApplept()!=Appl1){
-                    ap = new AppleTrack(Appl1);
-                }
-                ap.appledec();
+
 
 
 
@@ -105,11 +110,11 @@ public class Main extends DevelopmentAgent {
 
                     if (i == mySnakeNum) {
                         String[] Snekarr = snakeLine.split(" ");
-                        Alive=Snekarr[0];
+                        //Alive.add(Snekarr[0]);
                         /////////////////////////////////////////////////
+                        //Snakedets.add(new OS(Snekarr[0],Snekarr[1],Snekarr[2],Snekarr[3],Snekarr[Snekarr.length-1]));
 
 
-                        int count = 0;
                         for (int K = 3; K < Snekarr.length; K++) {
                             Point temppoint = new Point();
                             String[] Temppointholder = new String[2];
@@ -120,17 +125,31 @@ public class Main extends DevelopmentAgent {
                             temppoint.x = Integer.parseInt(Temppointholder[0]);
                             temppoint.y = Integer.parseInt(Temppointholder[1]);
 
-                            mySnakepoints.add(count,temppoint);
-                            count++;
+                            mySnakepoints.add(temppoint);
+
 
                         }
                     } else {
 
                        String[] Snekarr = snakeLine.split(" ");
                        ArrayList<Point> OtherSnakepoints =new ArrayList<Point>();
-                        int count2 = 0;
-                        if(Snekarr[0].contentEquals("invisible")) {
-                            for (int K = 4; K < Snekarr.length; K++) {
+                       int count = 0;
+                       Alive.add(Snekarr[0]);
+                       String Head;
+                       String Tail;
+
+                       if(Snekarr[0].contains("dead")){
+                           Head = "1,1";
+                           Tail = "3,3";
+                       }else{
+                           Head=Snekarr[3];
+                            Tail = Snekarr[Snekarr.length-1];
+
+                       }
+                       Snakedets.add(new OS(Snekarr[0],Snekarr[1],Snekarr[2],Head,Tail));
+
+
+                            for (int K = 3; K < Snekarr.length; K++) {
 
                                 Point temppoint = new Point();
                                 String[] Temppointholder = new String[2];
@@ -140,28 +159,14 @@ public class Main extends DevelopmentAgent {
 
                                 temppoint.x = Integer.parseInt(Temppointholder[0]);
                                 temppoint.y = Integer.parseInt(Temppointholder[1]);
+                                if (count == 0){
+                                    otherSHeads.add(temppoint);
+                                }
 
                                 OtherSnakepoints.add(temppoint);
+                                count++;
                             }
-                        }else{
-                        for (int K = 3; K < Snekarr.length; K++) {
 
-                            Point temppoint = new Point();
-                            String[] Temppointholder = new String[2];
-                            Arrays.fill(Temppointholder, null);
-                            Temppointholder = Snekarr[K].split(",");
-
-
-                            temppoint.x = Integer.parseInt(Temppointholder[0]);
-                            temppoint.y = Integer.parseInt(Temppointholder[1]);
-
-                            OtherSnakepoints.add(temppoint);
-
-                        }
-
-
-
-                        }
 
                             OtherSnakes.add(OtherSnakepoints);
 
@@ -177,12 +182,13 @@ public class Main extends DevelopmentAgent {
 
 
                 //Creates closed list
-                ClosedList.clear();
+
                 CalcClosedList ccl = new CalcClosedList(mySnakepoints,OtherSnakes);
                 ccl.fillsnakes();
                 ClosedList=ccl.GetCL();
 
-                //
+
+
 
 
 
@@ -193,43 +199,55 @@ public class Main extends DevelopmentAgent {
 
                 moveDirec= mv.getDirec(SnakeHead,Prevs);
 
+                //ClosedList.remove(SnakeHead);
+                //boolean go=false;
 
-                int Dist = AStar.HCost(SnakeHead,Appl1);
+                Dist = AStar.HCost(SnakeHead,Appl1);
 
-                Timer time=new Timer();
+                int Dist2=AStar.HCost(Snakedets.get(0).GetHead(),Appl1);
+                int Dist3=AStar.HCost(Snakedets.get(1).GetHead(),Appl1);
+                int Dist4=AStar.HCost(Snakedets.get(2).GetHead(),Appl1);
+                int shortestdist=Dist2;
 
-                if(Dist < 30){
-                    time=new Timer();
-                    time.start();
-
-                    Moves moves = new Moves(SnakeHead, Appl1, moveDirec, ClosedList);
-                    moves.main(SnakeHead, Appl1, moveDirec, ClosedList);
-                    moves.CalcMoveAStar();
-                    move = moves.getMove();
-
-                    time.stop();
-                }else{
-
-
-                    time.start();
-                    Point SnakeTail = mySnakepoints.get(mySnakepoints.size()-1);
-                    Moves moves = new Moves(SnakeHead, SnakeTail, moveDirec, ClosedList);
-                    moves.main(SnakeHead, SnakeTail, moveDirec, ClosedList);
-                    moves.CalcMoveAStar();
-                    move = moves.getMove();
-
-                    time.stop();
+                if(Dist2>Dist3 && Dist4>Dist3){
+                    shortestdist=Dist3;
+                }else if(Dist3>Dist4 && Dist2>Dist4){
+                    shortestdist=Dist4;
                 }
 
 
 
+                    if(Dist < shortestdist){
+
+                     Moves moves = new Moves(SnakeHead, Appl1, moveDirec, ClosedList);
+                     moves.main(SnakeHead, Appl1, moveDirec, ClosedList);
+                     moves.CalcMoveAStar();
+                     move = moves.getMove();
+
+                    }else{
+                        int counts = 0;
+                        Point STailtrck=Appl1;
+                       while(Snakedets.get(counts).isAlive.contains("alive")){
+                            STailtrck=Snakedets.get(counts).GetTail();
+                           counts++;
+                           if(Snakedets.get(counts).isAlive.contains("alive")){
+                               break;
+                               }
+                       }
+
+
+                        Moves moves = new Moves(SnakeHead, STailtrck, moveDirec, ClosedList);
+                        moves.main(SnakeHead, STailtrck, moveDirec, ClosedList);
+                        moves.CalcMoveAStar();
+                        move = moves.getMove();
+
+                    }
 
 
 
+                time.stop();
 
-            System.out.println("log calculating..."+Integer.toString(move)+"    "+Long.toString(time.getTime())+"\t"+ap.getApplept());
-            //int move = new Random().nextInt(4);
-
+            System.out.println("log calculating..."+Integer.toString(move)+"    "+Long.toString(time.getTime())+"\t"+SnakeHead);
             System.out.println(move);
         }
         } catch (IOException e) {

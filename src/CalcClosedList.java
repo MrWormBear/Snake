@@ -8,10 +8,10 @@ public class CalcClosedList {
     ArrayList<Point> ClosedList = new ArrayList<Point>();
     Point temppoint = new Point();
 
-    public CalcClosedList(ArrayList<Point> mysnake, ArrayList<ArrayList> othersnakes){
-        this.mysnake= mysnake;
+    public CalcClosedList(ArrayList<Point> mysneke, ArrayList<ArrayList> othersnekes){
+        this.mysnake= mysneke;
 
-        this.othersnakes=othersnakes;
+        this.othersnakes=othersnekes;
         this.othersnakes.add(this.mysnake);
 
 
@@ -27,7 +27,7 @@ public class CalcClosedList {
 
 
         String moveDirec = "";
-        for (int k=0;k<4;k++) {
+        for (int k=0;k<othersnakes.size();k++) {
             ArrayList<Point> temp = new ArrayList<>();
             //temp.clear();
             temp=othersnakes.get(k);
@@ -48,11 +48,11 @@ public class CalcClosedList {
 
                        temppoint=Point1;
                        int count =0;
-                       Point Frontsnake=new Point();
 
-                       while(temppoint.y<Point2.y){
+
+                       while(temppoint.y<  Point2.y){
                            temppoint = new Point(Point1);
-                           temppoint.y = (temppoint.y)+count;
+                           temppoint.y = temppoint.y+count;
                            ClosedList.add(temppoint);
                            count++;
 
@@ -63,7 +63,6 @@ public class CalcClosedList {
                        //Point temppoint = new Point();
                        temppoint=Point1;
                        int count =0;
-                       Point Frontsnake=new Point();
 
 
                        while(temppoint.y>Point2.y) {
@@ -79,7 +78,6 @@ public class CalcClosedList {
                       // Point temppoint = new Point();
                        temppoint=Point1;
                        int count =0;
-                       Point Frontsnake=new Point();
 
 
 
@@ -97,7 +95,7 @@ public class CalcClosedList {
 
                        temppoint=Point1;
                        int count =0;
-                       Point Frontsnake=new Point();
+
 
 
                        while(temppoint.x>Point2.x) {
@@ -108,41 +106,41 @@ public class CalcClosedList {
 
 
                        }
-
                        for(int K =0;K<othersnakes.size()-1;K++){
 
-                               Point TempPoint = new Point();
-                               ArrayList<Point> Snake = new ArrayList<>();
+                           Point TempPoint = new Point();
+                           ArrayList<Point> Snake = new ArrayList<>();
 
-                               Snake = othersnakes.get(K);
-                               if(Snake.size()<1){
+                           Snake = othersnakes.get(K);
+                           if(Snake.size()<1){
 
-                               }else {
-                                   TempPoint = Snake.get(0);
+                           }else {
+                               TempPoint = Snake.get(0);
 
 
-                                   Point Nextpt = new Point(TempPoint);
-                                  // Nextpt = TempPoint;
-                                   Nextpt.x = Nextpt.x + 1;
-                                   ClosedList.add(Nextpt);
-                                   //Nextpt.x = Nextpt.x - 1;
+                               Point Nextpt = new Point(TempPoint);
+                               Nextpt.x = Nextpt.x + 1;
+                               ClosedList.add(Nextpt);
 
-                                   Nextpt = new Point(TempPoint);
-                                   Nextpt.x = Nextpt.x - 1;
-                                   ClosedList.add(Nextpt);
-                                  // Nextpt.x = Nextpt.x + 1;
 
-                                   Nextpt = new Point(TempPoint);
-                                   Nextpt.y = Nextpt.y + 1;
-                                   ClosedList.add(Nextpt);
-                                   //Nextpt.y = Nextpt.y - 1;
+                               Nextpt = new Point(TempPoint);
+                               Nextpt.x = Nextpt.x - 1;
+                               ClosedList.add(Nextpt);
 
-                                   Nextpt = new Point(TempPoint);
-                                   Nextpt.y = Nextpt.y - 1;
-                                   ClosedList.add(Nextpt);
-                                   //Nextpt.y = Nextpt.y + 1;
-                               }
+
+                               Nextpt = new Point(TempPoint);
+                               Nextpt.y = Nextpt.y + 1;
+                               ClosedList.add(Nextpt);
+
+
+                               Nextpt = new Point(TempPoint);
+                               Nextpt.y = Nextpt.y - 1;
+                               ClosedList.add(Nextpt);
+
+                           }
                        }
+
+
                        break;
                    }
 
@@ -151,6 +149,7 @@ public class CalcClosedList {
 
 
                }
+
                //temp=othersnakes.get(k);
 
                ssize++;
