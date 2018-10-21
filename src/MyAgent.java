@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Main extends DevelopmentAgent {
+public class MyAgent extends DevelopmentAgent {
 
 
 
     public static void main(String args[]) throws IOException {
-        Main agent = new Main();
-        Main.start(agent, args);
+        MyAgent agent = new MyAgent();
+        MyAgent.start(agent, args);
     }
 
     @Override
@@ -65,12 +65,13 @@ public class Main extends DevelopmentAgent {
             tempap.x=0;
             tempap.y=0;
             int Dist;
-
+            double timer = 6;
+            Point applebackup = new Point(1,1);
 
 
             while (true) {
                 Timer time=new Timer();
-                time.start();
+
 
                 mySnakepoints.clear();
                 OtherSnakes.clear();
@@ -107,12 +108,10 @@ public class Main extends DevelopmentAgent {
                 for (int i = 0; i < nSnakes; i++) {
                     String snakeLine = br.readLine();
 
-
+                    time.start();
                     if (i == mySnakeNum) {
                         String[] Snekarr = snakeLine.split(" ");
-                        //Alive.add(Snekarr[0]);
-                        /////////////////////////////////////////////////
-                        //Snakedets.add(new OS(Snekarr[0],Snekarr[1],Snekarr[2],Snekarr[3],Snekarr[Snekarr.length-1]));
+
 
 
                         for (int K = 3; K < Snekarr.length; K++) {
@@ -189,7 +188,13 @@ public class Main extends DevelopmentAgent {
 
 
 
+                if(!applebackup.equals(Appl1)){
+                    applebackup = Appl1;
+                    timer = 6;
+                }
 
+
+                Timer time2=new Timer();
 
 
                 //getting Orientation of my snake;
@@ -217,7 +222,7 @@ public class Main extends DevelopmentAgent {
 
 
 
-                    if(Dist < shortestdist){
+                    if(Dist < shortestdist &&  Math.floor(timer) > 0){
 
                      Moves moves = new Moves(SnakeHead, Appl1, moveDirec, ClosedList);
                      moves.main(SnakeHead, Appl1, moveDirec, ClosedList);
@@ -225,30 +230,34 @@ public class Main extends DevelopmentAgent {
                      move = moves.getMove();
 
                     }else{
+
                         int counts = 0;
                         Point STailtrck=Appl1;
                        while(Snakedets.get(counts).isAlive.contains("alive")){
-                            STailtrck=Snakedets.get(counts).GetTail();
-                           counts++;
                            if(Snakedets.get(counts).isAlive.contains("alive")){
+                               STailtrck=Snakedets.get(counts).GetTail();
+                               counts++;
                                break;
                                }
-                       }
+
+
+                       }time2.start();
 
 
                         Moves moves = new Moves(SnakeHead, STailtrck, moveDirec, ClosedList);
                         moves.main(SnakeHead, STailtrck, moveDirec, ClosedList);
                         moves.CalcMoveAStar();
                         move = moves.getMove();
-
+                        time2.stop();
                     }
 
 
 
                 time.stop();
 
-            System.out.println("log calculating..."+Integer.toString(move)+"    "+Long.toString(time.getTime())+"\t"+SnakeHead);
+            //System.out.println("log calculating..."+Integer.toString(move)+"    "+Long.toString(time.getTime())+"\t"+SnakeHead +"\t" + Long.toString(time2.getTime())+"\t" + (timer) );
             System.out.println(move);
+                timer =(timer-0.1);
         }
         } catch (IOException e) {
 
